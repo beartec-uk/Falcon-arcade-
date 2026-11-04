@@ -1126,3 +1126,18 @@ body.play-focus-open .app-main {
     height: min(calc(100dvh - 8.5rem), 820px);
   }
 }
+
+/* ── Legal links footer ─────────────────────── */
+.legal-footer {
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.legal-footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+.legal-footer p {
+  margin: 0.35rem 0 0;
+}

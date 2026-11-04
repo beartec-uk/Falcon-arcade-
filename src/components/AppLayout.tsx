@@ -114,6 +114,17 @@ export function AppLayout() {
       <main className="app-main">
         <Outlet />
       </main>
+
+      {onGameRoute ? null : (
+        <footer className="legal-footer">
+          <a href="https://falcon-fpl.com/terms-of-use" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+          <span aria-hidden> · </span>
+          <a href="https://falcon-fpl.com/terms" target="_blank" rel="noopener noreferrer">Allocation Terms</a>
+          <span aria-hidden> · </span>
+          <a href="https://falcon-fpl.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
+          <p>Test tokens only, no cash value. © 2026 BEARTEC LTD.</p>
+        </footer>
+      )}
     </div>
   )
 }

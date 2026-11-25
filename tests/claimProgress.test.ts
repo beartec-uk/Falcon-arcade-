@@ -26,3 +26,18 @@ describe('stepRun (runs add up toward the claim)', () => {
     expect(play([0, 2000])).toEqual({ progress: 500, runs: 1 })
   })
 })
+
+describe('uncapped run tracking alongside capped claimProgress', () => {
+  it('assigns distinct runIds across high-scoring runs > 500 without capping score', () => {
+    const r1 = stepRun(undefined, 1250, () => 'runA')
+    const r2 = stepRun(r1.run, 0, () => 'runB')
+    const r3 = stepRun(r2.run, 920, () => 'runC')
+    expect(r1.run.runId).toBe('runA')
+    expect(r1.run.last).toBe(1250)
+    expect(r1.delta).toBe(500)
+    expect(r2.run.runId).toBe('runB')
+    expect(r3.run.runId).toBe('runB')
+    expect(r3.run.last).toBe(920)
+    expect(r3.delta).toBe(500)
+  })
+})

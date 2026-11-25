@@ -18,6 +18,7 @@ interface AllTimeGameEntry {
   plAccount: string | null
   game: string
   earnedPoints: number
+  lifetimeTotal?: number
   bestScore: number
   runs: number
   claims: number
@@ -31,6 +32,7 @@ interface OverallAirdropEntry {
   airdropPoints: number
   airdropCap: number
   earnedPoints: number
+  lifetimeTotal?: number
   bestScore: number
   playDays: number
   gamesPlayed: number
@@ -41,9 +43,11 @@ interface OverallAirdropEntry {
 interface AirdropSummary {
   scoresSince: string
   plAndRunSumSince: string
+  lifetimeTotalSince?: string
   totalPlayers: number
   totalAirdropPoints: number
   totalEarnedPoints: number
+  totalLifetimeScore?: number
   totalRuns: number
   totalClaims: number
 }
@@ -176,7 +180,8 @@ export function LeaderboardPage() {
         <p className="page-copy" style={{ marginTop: '0.9rem' }}>
           Airdrop pool: <strong>{summary.totalPlayers}</strong> PL players ·{' '}
           <strong>{summary.totalAirdropPoints.toFixed(1)}</strong> airdrop pts ·{' '}
-          <strong>{summary.totalEarnedPoints.toLocaleString()}</strong> earned run pts (since {summary.plAndRunSumSince} UTC)
+          <strong>{summary.totalEarnedPoints.toLocaleString()}</strong> earned run pts (since {summary.plAndRunSumSince} UTC) ·{' '}
+          <strong>{(summary.totalLifetimeScore ?? 0).toLocaleString()}</strong> lifetime total (tracked since 25 Nov 2026)
         </p>
       )}
 
@@ -226,7 +231,8 @@ export function LeaderboardPage() {
               </span>
               <strong>
                 {e.airdropPoints.toFixed(1)} / {e.airdropCap} pts ·{' '}
-                {e.earnedPoints.toLocaleString()} runs
+                {e.earnedPoints.toLocaleString()} earned ·{' '}
+                {(e.lifetimeTotal ?? 0).toLocaleString()} lifetime
               </strong>
             </li>
           ))}
@@ -248,7 +254,7 @@ export function LeaderboardPage() {
               <strong>
                 {e.legacyOnly
                   ? `Best ${e.bestScore.toLocaleString()}`
-                  : `${e.earnedPoints.toLocaleString()} pts (Best ${e.bestScore.toLocaleString()})`}
+                  : `${e.earnedPoints.toLocaleString()} earned · ${(e.lifetimeTotal ?? 0).toLocaleString()} lifetime (Best ${e.bestScore.toLocaleString()})`}
               </strong>
             </li>
           ))}

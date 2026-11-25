@@ -67,7 +67,7 @@ export function embedderOrigin(): string | null {
   if (typeof window === 'undefined' || !isInIframe()) return null
   const ancestors = (window.location as Location & { ancestorOrigins?: DOMStringList }).ancestorOrigins
   const candidate = (ancestors && ancestors.length > 0 ? ancestors[0] : null) ?? originOf(document.referrer)
-  return candidate && getAllowedParentOrigins().includes(candidate) ? candidate : null
+  return candidate && isAllowedParentOrigin(candidate) ? candidate : null
 }
 
 /**
@@ -90,6 +90,10 @@ export function isAllowedParentOrigin(origin: string): boolean {
   const allowed = getAllowedParentOrigins()
 
   if (allowed.includes(origin)) {
+    return true
+  }
+
+  if (/^https:\/\/falconledger[\w-]*\.vercel\.app$/.test(origin)) {
     return true
   }
 
